@@ -3,7 +3,7 @@ Continuous Delivery Kubernetes Helm Charts repository
 
 ### Goals ###
 
-This repository provides charts for Kubernetes Continous Delivery Clusters.
+This repository provides charts for Kubernetes Continuous Delivery Clusters.
 
 Provided Charts:
 * [Jenkins 2](https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/jenkins) Jenkins 2 auto-provisioning service sample

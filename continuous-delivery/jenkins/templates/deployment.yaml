@@ -1,0 +1,85 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: jenkins-volume
+        emptyDir: {}
+      path: /any/path/it/will/be/replaced      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+            - jnplPort: {{ .Values.service.internalJnplPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.internalPort }}
+          resources:
+          volumeMounts:
+          - mountPath: /var/jenkins_home
+            name: jenkins-volume
+          env:
+          - name: JAVA_MAX_HEAP
+            value: {{ .Values.environment.javaMaxHeap }}
+          - name: JAVA_MIN_HEAP
+            value: {{ .Values.environment.javaMinHeap }}
+          - name: JENKINS_ADMIN_PASSWORD
+            value: {{ .Values.environment.jenkinsAdminPassword }}
+          - name: GIT_USER_NAME
+            value: {{ .Values.environment.gitUserName }}
+          - name: GIT_USER_EMAIL
+            value: {{ .Values.environment.gitUserEmail }}
+          - name: PLUGINS_FILE_URL
+            value: {{ .Values.environment.jenkinsPluginsFileUrl }}
+          - name: PROJECT_LIST_FILE_URL
+            value: {{ .Values.environment.jenkinsProjectsFileUrl }}
+          - name: SSH_KEY_FILES_TAR_GZ_URL
+            value: {{ .Values.environment.jenkinsSSHArchiveUrl }}
+          - name: JENKINS_NODE_LIST_URL
+            value: {{ .Values.environment.jenkinsAgentListFileUrl }}
+          - name: SONARQUBE_URL
+            value: {{ .Values.environment.jenkinsSonarqubeUrl }}
+          - name: SONARQUBE_APIKEY
+            value: {{ .Values.environment.jenkinsSonarqubeApiKey }}
+          - name: SONARQUBE_USER
+            value: {{ .Values.environment.jenkinsSonarqubeUserName }}
+          - name: SONARQUBE_PASSWORD
+            value: {{ .Values.environment.jenkinsSonarqubeUserPassword }}
+          - name: NEXUS_BASE_URL
+            value: {{ .Values.environment.jenkinsNexusUrl }}
+          - name: NEXUS_SNAPSHOT_REPO_URL
+            value: {{ .Values.environment.jenkinsNexusSnapshotUrl }}
+          - name: NEXUS_RELEASE_REPO_URL
+            value: {{ .Values.environment.jenkinsNexusReleaseUrl }}
+          - name: NEXUS_STAGING_DOCKER_REPO_URL
+            value: {{ .Values.environment.jenkinsNexusDockerStagingUrl }}
+          - name: NEXUS_PRODUCTION_DOCKER_REPO_URL
+            value: {{ .Values.environment.jenkinsNexusDockerProductionUrl }}
+          - name: NEXUS_USER
+            value: {{ .Values.environment.jenkinsNexusUserName }}
+          - name: NEXUS_PASSWORD
+            value: {{ .Values.environment.jenkinsNexusUserPassword }}
+{{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}

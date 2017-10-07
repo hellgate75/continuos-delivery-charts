@@ -3,10 +3,10 @@ description: Jenkins 2 Continuous Delivery Chart for Kubernetes
 name: jenkins
 version: 0.1.0
 appVersion: 2.60.3
-home: https://hadoop.apache.org/
+home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/jenkins
 sources:
-- https://github.com/apache/hadoop
-icon: http://hadoop.apache.org/images/hadoop-logo.jpg
+- https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/jenkins
+icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/jenkins.png
 maintainers:
-- name: danisla
-  email: disla@google.com
+- name: "Fabrizio Torelli"
+  email: hellgate75@gmail.com

@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  jenkins:
+  - apiVersion: v1
+    appVersion: 2.60.3
+    created: 2017-10-08T00:44:35.327733684+01:00
+    description: Jenkins 2 Continuous Delivery Chart for Kubernetes
+    digest: 34800811fee4c1a9c02669bc9992afde0cac5e98d91263215ef9714131155511
+    home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/jenkins
+    icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/jenkins.png
+    maintainers:
+    - email: hellgate75@gmail.com
+      name: Fabrizio Torelli
+    name: jenkins
+    sources:
+    - https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/jenkins
+    urls:
+    - jenkins-0.1.0.tgz
+    version: 0.1.0
+generated: 2017-10-08T00:44:35.327172818+01:00

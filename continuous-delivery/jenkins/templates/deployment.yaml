@@ -16,69 +16,89 @@ spec:
         release: {{ .Release.Name }}
     spec:
       volumes:
-      - name: jenkins-volume
-        emptyDir: {}
-      path: /any/path/it/will/be/replaced      containers:
+      # - name: jenkins-volume
+      #   emptyDir: {}
+      containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.internalPort }}
-            - jnplPort: {{ .Values.service.internalJnplPort }}
+            - containerPort: {{ .Values.service.internalJnplPort }}
           livenessProbe:
             httpGet:
               path: /
               port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /
               port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
           resources:
-          volumeMounts:
-          - mountPath: /var/jenkins_home
-            name: jenkins-volume
+          # volumeMounts:
+          # - mountPath: /var/jenkins_home
+          #   name: jenkins-volume
           env:
+          - name: NUMBER_OF_JENKINS_EXECUTORS
+            value: {{ .Values.variables.numberOfExecutors }}
           - name: JAVA_MAX_HEAP
-            value: {{ .Values.environment.javaMaxHeap }}
+            value: {{ .Values.variables.javaMaxHeap }}
           - name: JAVA_MIN_HEAP
-            value: {{ .Values.environment.javaMinHeap }}
+            value: {{ .Values.variables.javaMinHeap }}
           - name: JENKINS_ADMIN_PASSWORD
-            value: {{ .Values.environment.jenkinsAdminPassword }}
+            value: {{ .Values.variables.jenkinsAdminPassword }}
           - name: GIT_USER_NAME
-            value: {{ .Values.environment.gitUserName }}
+            value: {{ .Values.variables.gitUserName }}
           - name: GIT_USER_EMAIL
-            value: {{ .Values.environment.gitUserEmail }}
+            value: {{ .Values.variables.gitUserEmail }}
           - name: PLUGINS_FILE_URL
-            value: {{ .Values.environment.jenkinsPluginsFileUrl }}
+            value: {{ .Values.variables.jenkinsPluginsFileUrl }}
           - name: PROJECT_LIST_FILE_URL
-            value: {{ .Values.environment.jenkinsProjectsFileUrl }}
+            value: {{ .Values.variables.jenkinsProjectsFileUrl }}
           - name: SSH_KEY_FILES_TAR_GZ_URL
-            value: {{ .Values.environment.jenkinsSSHArchiveUrl }}
+            value: {{ .Values.variables.jenkinsSSHArchiveUrl }}
           - name: JENKINS_NODE_LIST_URL
-            value: {{ .Values.environment.jenkinsAgentListFileUrl }}
+            value: {{ .Values.variables.jenkinsAgentListFileUrl }}
           - name: SONARQUBE_URL
-            value: {{ .Values.environment.jenkinsSonarqubeUrl }}
+            value: {{ .Values.variables.jenkinsSonarqubeUrl }}
           - name: SONARQUBE_APIKEY
-            value: {{ .Values.environment.jenkinsSonarqubeApiKey }}
+            value: {{ .Values.variables.jenkinsSonarqubeApiKey }}
           - name: SONARQUBE_USER
-            value: {{ .Values.environment.jenkinsSonarqubeUserName }}
+            value: {{ .Values.variables.jenkinsSonarqubeUserName }}
           - name: SONARQUBE_PASSWORD
-            value: {{ .Values.environment.jenkinsSonarqubeUserPassword }}
+            value: {{ .Values.variables.jenkinsSonarqubeUserPassword }}
           - name: NEXUS_BASE_URL
-            value: {{ .Values.environment.jenkinsNexusUrl }}
+            value: {{ .Values.variables.jenkinsNexusUrl }}
           - name: NEXUS_SNAPSHOT_REPO_URL
-            value: {{ .Values.environment.jenkinsNexusSnapshotUrl }}
+            value: {{ .Values.variables.jenkinsNexusSnapshotUrl }}
           - name: NEXUS_RELEASE_REPO_URL
-            value: {{ .Values.environment.jenkinsNexusReleaseUrl }}
+            value: {{ .Values.variables.jenkinsNexusReleaseUrl }}
           - name: NEXUS_STAGING_DOCKER_REPO_URL
-            value: {{ .Values.environment.jenkinsNexusDockerStagingUrl }}
+            value: {{ .Values.variables.jenkinsNexusDockerStagingUrl }}
           - name: NEXUS_PRODUCTION_DOCKER_REPO_URL
-            value: {{ .Values.environment.jenkinsNexusDockerProductionUrl }}
+            value: {{ .Values.variables.jenkinsNexusDockerProductionUrl }}
           - name: NEXUS_USER
-            value: {{ .Values.environment.jenkinsNexusUserName }}
+            value: {{ .Values.variables.jenkinsNexusUserName }}
           - name: NEXUS_PASSWORD
-            value: {{ .Values.environment.jenkinsNexusUserPassword }}
+            value: {{ .Values.variables.jenkinsNexusUserPassword }}
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+              - IPC_LOCK
+              - SYS_ADMIN
+{{- if .Values.resources }}
 {{ toYaml .Values.resources | indent 12 }}
+{{- end }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

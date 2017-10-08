@@ -3,9 +3,9 @@ entries:
   jenkins:
   - apiVersion: v1
     appVersion: 2.60.3
-    created: 2017-10-08T02:24:10.077163892+01:00
+    created: 2017-10-13T09:15:35.00754869+01:00
     description: Jenkins 2 Continuous Delivery Agent Helm Chart for Kubernetes
-    digest: 20498a5bfdef5570b2f3015f90eb21540a8c62c05d2f145956509f5c43954165
+    digest: b881745511d02939e0e20955e74ee0edfe2fd89457ce86d85c3b1bf5e55a3bb7
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/jenkins
     icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/jenkins.png
     maintainers:
@@ -20,9 +20,9 @@ entries:
   jenkins-agent:
   - apiVersion: v1
     appVersion: 1.0.0
-    created: 2017-10-08T02:24:10.077513775+01:00
+    created: 2017-10-13T09:15:35.008084533+01:00
     description: Ubuntu Jenkins Agent Continuous Delivery Helm Chart for Kubernetes
-    digest: 662339b9439d6ce42f62f717bc23c8bc5f4aed2798f2a43c0d06a4ccf9aaa40f
+    digest: 57be9f0bc9eba7060fd1ec71e3d0d96b4f1c5540017f9d2236cdc4f0c338565c
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/agent
     icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/jenkins.png
     maintainers:
@@ -34,4 +34,4 @@ entries:
     urls:
     - jenkins-agent-0.1.0.tgz
     version: 0.1.0
-generated: 2017-10-08T02:24:10.076521217+01:00
+generated: 2017-10-13T09:15:35.006676515+01:00

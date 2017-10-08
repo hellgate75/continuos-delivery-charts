@@ -16,6 +16,11 @@ spec:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
     spec:
+      # volumes:
+      # - name: jenkins-agent-docker-volume
+      #   emptyDir: {}
+      # - name: jenkins-agent-maven-volume
+      #   emptyDir: {}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -27,13 +32,39 @@ spec:
               port: {{ $servicePort }}
             initialDelaySeconds: 60
             periodSeconds: 120
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
           livenessProbe:
             tcpSocket:
               port: {{ $servicePort }}
             initialDelaySeconds: 60
             periodSeconds: 120
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
           resources:
+          # volumeMounts:
+          # - mountPath: /var/lib/docker
+          #   name: jenkins-agent-docker-volume
+          # - mountPath: /home/jenkins/.m2
+          #   name: jenkins-agent-maven-volume
+          env:
+          - name: GIT_USER_NAME
+            value: {{ .Values.variables.gitUserName }}
+          - name: GIT_USER_EMAIL
+            value: {{ .Values.variables.gitUserEmail }}
+          - name: SSH_KEY_FILES_TAR_GZ_URL
+            value: {{ .Values.variables.jenkinsSSHArchiveUrl }}
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+              - IPC_LOCK
+              - SYS_ADMIN
+{{- if .Values.resources }}
 {{ toYaml .Values.resources | indent 12 }}
+{{- end }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

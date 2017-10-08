@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: hellgate75/cd-jenkins2
-  tag: 2.60.3
+  tag: latest
   pullPolicy: IfNotPresent
 service:
   name: jenkins2
@@ -27,6 +27,7 @@ ingress:
     #   hosts:
     #     - chart-example.local
 variables:
+  numberOfExecutors: "\"2\""
   javaMaxHeap: "2G"
   javaMinHeap: "256m"
   jenkinsAdminPassword: ""
@@ -48,7 +49,7 @@ variables:
   jenkinsNexusUserName: ""
   jenkinsNexusUserPassword: ""
 
-resources: {}
+# resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -59,3 +60,4 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+# nodeSelector: {}

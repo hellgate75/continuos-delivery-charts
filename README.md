@@ -6,7 +6,8 @@ Continuous Delivery Kubernetes Helm Charts repository
 This repository provides charts for Kubernetes Continuous Delivery Clusters.
 
 Provided Charts:
-* [Jenkins 2](https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/jenkins) Jenkins 2 auto-provisioning service sample
+* [Jenkins 2](https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/jenkins): Jenkins 2 auto-provisioning service sample
+* [Jenkins Agent](https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/jenkins-agent): Jenkins Agent auto-provisioning service sample
 
 
 ### License ###

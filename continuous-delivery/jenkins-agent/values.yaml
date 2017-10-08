@@ -1,25 +1,24 @@
-# Default values for jenkins.
+# Default values for jenkins-agent.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-replicaCount: 1
+replicaCount: 2
 image:
-  repository: hellgate75/cd-jenkins2
-  tag: 2.60.3
+  repository: hellgate75/cd-jenkins-agent
+  tag: latest
   pullPolicy: IfNotPresent
 service:
-  name: jenkins2
+  name: jenkins-agent
   type: ClusterIP
-  externalPort: 8080
-  internalPort: 8080
-  externalJnplPort: 50000
-  internalJnplPort: 50000
+  externalPort: 4322
+  internalPort: 22
 ingress:
   enabled: false
   # Used to create an Ingress record.
   hosts:
-    - jenkins2.local
+    - linux-agent-1.local
+    - linux-agent-2.local
   annotations:
-    #kubernetes.io/ingress.class: jenkins2
+    #kubernetes.io/ingress.class: jenkins-agent
     # kubernetes.io/tls-acme: "true"
   tls:
     # Secrets must be manually created in the namespace.
@@ -27,27 +26,9 @@ ingress:
     #   hosts:
     #     - chart-example.local
 variables:
-  javaMaxHeap: "2G"
-  javaMinHeap: "256m"
-  jenkinsAdminPassword: ""
   gitUserName: ""
   gitUserEmail: ""
-  jenkinsPluginsFileUrl: ""
-  jenkinsProjectsFileUrl: ""
   jenkinsSSHArchiveUrl: ""
-  jenkinsAgentListFileUrl:  ""
-  jenkinsSonarqubeUrl: ""
-  jenkinsSonarqubeApiKey: ""
-  jenkinsSonarqubeUserName: ""
-  jenkinsSonarqubeUserPassword:  ""
-  jenkinsNexusUrl: ""
-  jenkinsNexusSnapshotUrl: ""
-  jenkinsNexusReleaseUrl: ""
-  jenkinsNexusDockerStagingUrl: ""
-  jenkinsNexusDockerProductionUrl: ""
-  jenkinsNexusUserName: ""
-  jenkinsNexusUserPassword: ""
-
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little

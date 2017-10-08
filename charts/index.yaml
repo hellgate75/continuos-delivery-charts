@@ -3,9 +3,9 @@ entries:
   jenkins:
   - apiVersion: v1
     appVersion: 2.60.3
-    created: 2017-10-08T00:44:35.327733684+01:00
+    created: 2017-10-08T01:13:28.629783574+01:00
     description: Jenkins 2 Continuous Delivery Chart for Kubernetes
-    digest: 34800811fee4c1a9c02669bc9992afde0cac5e98d91263215ef9714131155511
+    digest: 3feb47089973fc43eb0ae4ec66a71c8989a30bc2b3225c000681ff75f4f81576
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/jenkins
     icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/jenkins.png
     maintainers:
@@ -17,4 +17,4 @@ entries:
     urls:
     - jenkins-0.1.0.tgz
     version: 0.1.0
-generated: 2017-10-08T00:44:35.327172818+01:00
+generated: 2017-10-08T01:13:28.629291756+01:00

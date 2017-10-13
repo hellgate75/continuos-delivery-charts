@@ -1,0 +1,12 @@
+apiVersion: v1
+description: Nexus 3 Continuous Delivery Chart for Kubernetes
+name: nexus3
+version: 0.1.0
+appVersion: 3.5.0
+home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/nexus3
+sources:
+- https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/nexus3
+icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/nexus.png
+maintainers:
+- name: "Fabrizio Torelli"
+  email: hellgate75@gmail.com

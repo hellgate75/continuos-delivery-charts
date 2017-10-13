@@ -1,0 +1,43 @@
+{{- if .Values.service.nextwork.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ template "fullname" . }}
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "name" . }}
+      release: {{ .Release.Name }}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 172.17.0.0/16
+        except:
+        - 172.17.1.0/24
+    - namespaceSelector:
+        matchLabels:
+          app: {{ template "name" . }}
+          release: {{ .Release.Name }}
+    - podSelector:
+        matchLabels:
+          app: {{ template "name" . }}
+          release: {{ .Release.Name }}
+    ports:
+    - protocol: TCP
+      port: {{ .Values.service.internalPort }}
+    - protocol: TCP
+      port: {{ .Values.service.internalJnplPort }}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.0.0.0/24
+    ports:
+    - protocol: TCP
+      port: {{ .Values.service.externalPort }}
+    - protocol: TCP
+      port: {{ .Values.service.externalJnplPort }}
+{{- end -}}

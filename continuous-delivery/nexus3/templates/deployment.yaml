@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: {{ .Values.service.externalVolumeName }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+            - containerPort: {{ .Values.service.internalServicePort }}
+            - containerPort: {{ .Values.service.internalDockerStagingPort }}
+            - containerPort: {{ .Values.service.internalDockerProdPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
+          volumeMounts:
+          - mountPath: /nexus-data
+            copyData: true
+            name: {{ .Values.service.externalVolumeName }}
+          env:
+          - name: JVM_MAX_MEM
+            value: {{ .Values.variables.javaMaxMem }}
+          - name: JAVA_MAX_HEAP
+            value: {{ .Values.variables.javaMaxHeap }}
+          - name: JAVA_MIN_HEAP
+            value: {{ .Values.variables.javaMinHeap }}
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+              - IPC_LOCK
+              - SYS_ADMIN
+{{- if .Values.resources }}
+{{ toYaml .Values.resources | indent 12 }}
+{{- end }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}

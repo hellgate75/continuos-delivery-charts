@@ -3,23 +3,28 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: hellgate75/cd-jenkins2
+  repository: hellgate75/cd-nexus3
   tag: latest
   pullPolicy: IfNotPresent
 service:
-  name: jenkins2
+  name: nexus3
   type: ClusterIP
-  externalPort: 8080
-  internalPort: 8080
-  externalJnplPort: 50000
-  internalJnplPort: 50000
+  externalVolumeName: ""
+  externalPort: 8081
+  internalPort: 8081
+  externalServicePort: 2480
+  internalServicePort: 2480
+  externalDockerStagingPort: 18999
+  internalDockerStagingPort: 18999
+  externalDockerProdPort: 19000
+  internalDockerProdPort: 19000
   nextwork:
     enabled: false
 ingress:
   enabled: false
   # Used to create an Ingress record.
   hosts:
-    - jenkins2.local
+    - nexus3.local
   annotations:
     #kubernetes.io/ingress.class: jenkins2
     # kubernetes.io/tls-acme: "true"
@@ -29,27 +34,9 @@ ingress:
     #   hosts:
     #     - chart-example.local
 variables:
-  numberOfExecutors: "\"2\""
+  javaMaxMem: "2G"
   javaMaxHeap: "2G"
   javaMinHeap: "256m"
-  jenkinsAdminPassword: ""
-  gitUserName: ""
-  gitUserEmail: ""
-  jenkinsPluginsFileUrl: ""
-  jenkinsProjectsFileUrl: ""
-  jenkinsSSHArchiveUrl: ""
-  jenkinsAgentListFileUrl:  ""
-  jenkinsSonarqubeUrl: ""
-  jenkinsSonarqubeApiKey: ""
-  jenkinsSonarqubeUserName: ""
-  jenkinsSonarqubeUserPassword:  ""
-  jenkinsNexusUrl: ""
-  jenkinsNexusSnapshotUrl: ""
-  jenkinsNexusReleaseUrl: ""
-  jenkinsNexusDockerStagingUrl: ""
-  jenkinsNexusDockerProductionUrl: ""
-  jenkinsNexusUserName: ""
-  jenkinsNexusUserPassword: ""
 
 # resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

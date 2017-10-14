@@ -1,0 +1,116 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+      - name: {{ .Values.service.externalVolumeName }}
+      - name: {{ .Values.service.externalDbVolumeName }}
+      containers:
+        - name: "{{ .Chart.Name }}db"
+          image: "{{ .Values.image.dbRepository }}:{{ .Values.image.dbTag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalDbPort }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.service.internalDbPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.service.internalDbPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: {{ .Values.service.externalDbVolumeName }}
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{ .Values.variables.mySqlRootPassword }}
+          - name: MYSQL_DATABASE
+            value: {{ .Values.variables.mySqlDatabaseName }}
+          - name: MYSQL_USER
+            value: {{ .Values.variables.mySqlUser }}
+          - name: MYSQL_PASSWORD
+            value: {{ .Values.variables.mySqlPassword }}
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+              - IPC_LOCK
+              - SYS_ADMIN
+        - name: "{{ .Chart.Name }}qube"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+            - containerPort: {{ .Values.service.internalServicePort }}
+            - containerPort: {{ .Values.service.internalAuxPort }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.variables.sonarqubeWebContext }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.variables.sonarqubeWebContext }}
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 10
+            timeoutSeconds: 5
+          volumeMounts:
+          - mountPath: /opt/sonarqube/data
+            name: {{ .Values.service.externalVolumeName }}
+          env:
+          - name: SONARQUBE_JDBC_USERNAME
+            value: {{ .Values.variables.sonarqubeJdbcUser }}
+          - name: SONARQUBE_JDBC_PASSWORD
+            value: {{ .Values.variables.sonarqubeJdbcPassword }}
+          - name: SONARQUBE_JDBC_URL
+            value: {{ .Values.variables.sonarqubeJdbcURL }}
+          - name: SONARQUBE_WEB_CONTEXT
+            value: {{ .Values.variables.sonarqubeWebContext }}
+          - name: STARTUP_TIMEOUT_SECONDS
+            value: {{ .Values.variables.sonarqubeStartTimeoutSeconds }}
+          - name: PLUGINS_FILE_URL
+            value: {{ .Values.variables.sonarqubePluginsFileUrl }}
+          - name: SONARQUBE_REINSTALL_PLUGIN
+            value: {{ .Values.variables.sonarqubeReinstallPlugins }}
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+              - IPC_LOCK
+              - SYS_ADMIN
+{{- if .Values.resources }}
+{{ toYaml .Values.resources | indent 12 }}
+{{- end }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}

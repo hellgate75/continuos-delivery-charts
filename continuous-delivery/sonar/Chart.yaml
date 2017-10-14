@@ -1,0 +1,12 @@
+apiVersion: v1
+description: Sonarqube and MySql Continuous Delivery Chart for Kubernetes
+name: sonar
+version: 0.1.0
+appVersion: 6.5
+home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/sonarqube
+sources:
+- https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/sonar
+icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/sonarqube.jpg
+maintainers:
+- name: "Fabrizio Torelli"
+  email: hellgate75@gmail.com

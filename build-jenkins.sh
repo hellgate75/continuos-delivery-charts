@@ -1,7 +1,8 @@
 #!/bin/bash
 helm package continuous-delivery/jenkins-agent/
 helm package continuous-delivery/nexus3/
-helm package continuous-delivery/jenkins
+helm package continuous-delivery/sonar/
+helm package continuous-delivery/jenkins/
 mv *.tgz docs/
 helm repo index docs
 git add -u

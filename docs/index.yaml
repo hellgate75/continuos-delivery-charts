@@ -3,7 +3,7 @@ entries:
   jenkins:
   - apiVersion: v1
     appVersion: 2.60.3
-    created: 2017-10-14T18:49:48.142051846+01:00
+    created: 2017-10-14T23:51:38.579431101+01:00
     description: Jenkins 2 Continuous Delivery Agent Helm Chart for Kubernetes
     digest: e25cb46fd5f7da86cc03d070c556a04ae25b6432498b6e93e5dbe32ac714e0c4
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/jenkins
@@ -20,7 +20,7 @@ entries:
   jenkins-agent:
   - apiVersion: v1
     appVersion: 1.0.0
-    created: 2017-10-14T18:49:48.143034544+01:00
+    created: 2017-10-14T23:51:38.580604492+01:00
     description: Ubuntu Jenkins Agent Continuous Delivery Helm Chart for Kubernetes
     digest: 57be9f0bc9eba7060fd1ec71e3d0d96b4f1c5540017f9d2236cdc4f0c338565c
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/agent
@@ -37,7 +37,7 @@ entries:
   nexus3:
   - apiVersion: v1
     appVersion: 3.5.0
-    created: 2017-10-14T18:49:48.143967644+01:00
+    created: 2017-10-14T23:51:38.581285652+01:00
     description: Nexus 3 Continuous Delivery Chart for Kubernetes
     digest: aeb0be22432ef10af394eb68b1ffcedd87b65785c5f97bbf89b0f7563943086b
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/nexus3
@@ -51,4 +51,21 @@ entries:
     urls:
     - nexus3-0.1.0.tgz
     version: 0.1.0
-generated: 2017-10-14T18:49:48.141541183+01:00
+  sonar:
+  - apiVersion: v1
+    appVersion: "6.5"
+    created: 2017-10-14T23:51:38.581646685+01:00
+    description: Sonarqube and MySql Continuous Delivery Chart for Kubernetes
+    digest: 13d42df4ec78ff200d73fbea1bac88377839edac76acdf59b1134b22b5c9a079
+    home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/sonarqube
+    icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/sonarqube.jpg
+    maintainers:
+    - email: hellgate75@gmail.com
+      name: Fabrizio Torelli
+    name: sonar
+    sources:
+    - https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/sonar
+    urls:
+    - sonar-0.1.0.tgz
+    version: 0.1.0
+generated: 2017-10-14T23:51:38.578146721+01:00

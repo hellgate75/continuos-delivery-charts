@@ -31,18 +31,18 @@ spec:
             tcpSocket:
               port: {{ $servicePort }}
             initialDelaySeconds: 60
-            periodSeconds: 120
+            periodSeconds: 300
             successThreshold: 1
-            failureThreshold: 10
-            timeoutSeconds: 5
+            failureThreshold: 20
+            timeoutSeconds: 15
           livenessProbe:
             tcpSocket:
               port: {{ $servicePort }}
             initialDelaySeconds: 60
-            periodSeconds: 120
+            periodSeconds: 300
             successThreshold: 1
-            failureThreshold: 10
-            timeoutSeconds: 5
+            failureThreshold: 20
+            timeoutSeconds: 15
           resources:
           # volumeMounts:
           # - mountPath: /var/lib/docker

@@ -3,9 +3,9 @@ entries:
   jenkins:
   - apiVersion: v1
     appVersion: 2.60.3
-    created: 2017-10-14T23:51:38.579431101+01:00
+    created: 2017-10-19T20:41:17.882852346+01:00
     description: Jenkins 2 Continuous Delivery Agent Helm Chart for Kubernetes
-    digest: e25cb46fd5f7da86cc03d070c556a04ae25b6432498b6e93e5dbe32ac714e0c4
+    digest: 44fcd3c5517e8f0f18c507e92a68e6b4f281dbd65b66eef2a38e1e569ef05d9b
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/jenkins
     icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/jenkins.png
     maintainers:
@@ -20,9 +20,9 @@ entries:
   jenkins-agent:
   - apiVersion: v1
     appVersion: 1.0.0
-    created: 2017-10-14T23:51:38.580604492+01:00
+    created: 2017-10-19T20:41:17.883189047+01:00
     description: Ubuntu Jenkins Agent Continuous Delivery Helm Chart for Kubernetes
-    digest: 57be9f0bc9eba7060fd1ec71e3d0d96b4f1c5540017f9d2236cdc4f0c338565c
+    digest: 3f7e287e83cd27683d159a5dd10c602f0419bd3e457c01846b4375cd02d7a2bb
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/agent
     icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/jenkins.png
     maintainers:
@@ -37,9 +37,9 @@ entries:
   nexus3:
   - apiVersion: v1
     appVersion: 3.5.0
-    created: 2017-10-14T23:51:38.581285652+01:00
+    created: 2017-10-19T20:41:17.883541462+01:00
     description: Nexus 3 Continuous Delivery Chart for Kubernetes
-    digest: aeb0be22432ef10af394eb68b1ffcedd87b65785c5f97bbf89b0f7563943086b
+    digest: 3b399f1e33fd3ee0dabe15f64580d2b6801727163b6ba90908e2fe7cf0787d13
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/nexus3
     icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/nexus.png
     maintainers:
@@ -54,9 +54,9 @@ entries:
   sonar:
   - apiVersion: v1
     appVersion: "6.5"
-    created: 2017-10-14T23:51:38.581646685+01:00
-    description: Sonarqube and MySql Continuous Delivery Chart for Kubernetes
-    digest: 13d42df4ec78ff200d73fbea1bac88377839edac76acdf59b1134b22b5c9a079
+    created: 2017-10-19T20:41:17.884561643+01:00
+    description: Sonarqube Continuous Delivery Chart for Kubernetes
+    digest: 9f14ec5b757e41cf4147e6573d161af60b3ba087c84709ac8c42e037cc8cd888
     home: https://github.com/hellgate75/docker-cdstack/tree/master/docker/sonarqube
     icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/sonarqube.jpg
     maintainers:
@@ -68,4 +68,20 @@ entries:
     urls:
     - sonar-0.1.0.tgz
     version: 0.1.0
-generated: 2017-10-14T23:51:38.578146721+01:00
+  sonardb:
+  - apiVersion: v1
+    appVersion: "5.7"
+    created: 2017-10-19T20:41:17.885487285+01:00
+    description: MySql for Sonarqube Continuous Delivery Chart for Kubernetes
+    digest: b14db0a3f4acff4f7ecf4af4be204a7a82d0c30b5a9fc01a2d24bba16ff46993
+    icon: https://github.com/hellgate75/docker-cdstack/raw/master/images/mysql.jpg
+    maintainers:
+    - email: hellgate75@gmail.com
+      name: Fabrizio Torelli
+    name: sonardb
+    sources:
+    - https://github.com/hellgate75/continuous-delivery-charts/tree/master/continuous-delivery/sonardb
+    urls:
+    - sonardb-0.1.0.tgz
+    version: 0.1.0
+generated: 2017-10-19T20:41:17.882327893+01:00

@@ -29,25 +29,24 @@ spec:
             httpGet:
               path: /
               port: {{ .Values.service.internalPort }}
-            initialDelaySeconds: 300
-            periodSeconds: 60
+            initialDelaySeconds: 480
+            periodSeconds: 120
             successThreshold: 1
-            failureThreshold: 10
-            timeoutSeconds: 5
+            failureThreshold: 30
+            timeoutSeconds: 10
           readinessProbe:
             httpGet:
               path: /
               port: {{ .Values.service.internalPort }}
-            initialDelaySeconds: 300
-            periodSeconds: 60
+            initialDelaySeconds: 480
+            periodSeconds: 120
             successThreshold: 1
-            failureThreshold: 10
-            timeoutSeconds: 5
+            failureThreshold: 30
+            timeoutSeconds: 10
           resources:
-          # volumeMounts:
-          # - mountPath: /var/jenkins_home
-          #   name: jenkins-volume
           env:
+          - name: STARTUP_TIMEOUT_SECONDS
+            value: {{ .Values.variables.startUpTimeout }}
           - name: NUMBER_OF_JENKINS_EXECUTORS
             value: {{ .Values.variables.numberOfExecutors }}
           - name: JAVA_MAX_HEAP

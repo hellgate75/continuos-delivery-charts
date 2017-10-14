@@ -3,27 +3,22 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: hellgate75/cd-sonarqube
-  tag: latest
+  repository: mysql
+  tag: "5.7"
   pullPolicy: IfNotPresent
 service:
-  name: sonar
+  name: sonardb
   type: ClusterIP
   externalVolumeName: ""
-  externalDbVolumeName: ""
-  externalPort: 9000
-  internalPort: 9000
-  externalServicePort: 9001
-  internalServicePort: 9001
-  externalAuxPort: 9002
-  internalAuxPort: 9002
+  externalPort: 6603
+  internalPort: 3306
   nextwork:
     enabled: false
 ingress:
   enabled: false
   # Used to create an Ingress record.
   hosts:
-    - sonarqube.local
+    - sonardb.local
   annotations:
     #kubernetes.io/ingress.class: jenkins2
     # kubernetes.io/tls-acme: "true"
@@ -33,13 +28,10 @@ ingress:
     #   hosts:
     #     - chart-example.local
 variables:
-  sonarqubeJdbcUser: ""
-  sonarqubeJdbcPassword: ""
-  sonarqubeJdbcURL: ""
-  sonarqubeWebContext: ""
-  sonarqubeStartTimeoutSeconds: ""
-  sonarqubePluginsFileUrl: ""
-  sonarqubeReinstallPlugins: ""
+  mySqlRootPassword: ""
+  mySqlDatabaseName: ""
+  mySqlUser: ""
+  mySqlPassword: ""
 
 # resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

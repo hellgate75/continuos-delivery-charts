@@ -30,23 +30,22 @@ spec:
             httpGet:
               path: /
               port: {{ .Values.service.internalPort }}
-            initialDelaySeconds: 300
-            periodSeconds: 60
+            initialDelaySeconds: 450
+            periodSeconds: 120
             successThreshold: 1
-            failureThreshold: 10
-            timeoutSeconds: 5
+            failureThreshold: 30
+            timeoutSeconds: 10
           readinessProbe:
             httpGet:
               path: /
               port: {{ .Values.service.internalPort }}
             initialDelaySeconds: 300
-            periodSeconds: 60
+            periodSeconds: 120
             successThreshold: 1
-            failureThreshold: 10
-            timeoutSeconds: 5
+            failureThreshold: 30
+            timeoutSeconds: 10
           volumeMounts:
           - mountPath: /nexus-data
-            copyData: true
             name: {{ .Values.service.externalVolumeName }}
           env:
           - name: JVM_MAX_MEM

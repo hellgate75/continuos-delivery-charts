@@ -14,14 +14,6 @@ spec:
       targetPort: {{ .Values.service.internalPort }}
       protocol: TCP
       name: {{ .Values.service.name }}
-    - port: {{ .Values.service.externalServicePort }}
-      targetPort: {{ .Values.service.internalServicePort }}
-      protocol: TCP
-      name: {{ .Values.service.name }}-es
-    - port: {{ .Values.service.externalAuxPort }}
-      targetPort: {{ .Values.service.internalAuxPort }}
-      protocol: TCP
-      name: {{ .Values.service.name }}-ce
   selector:
     app: {{ template "name" . }}
     release: {{ .Release.Name }}
